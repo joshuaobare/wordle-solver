@@ -1,6 +1,6 @@
 import time
 from collections import defaultdict
-from word_list import Trie
+from Trie import Trie
 import pickle
 
 words = []
@@ -23,12 +23,14 @@ def backtrack(i: int, start_word: list[str], curr_word: list[str], possible_lett
             words.append(found_word)
         return
 
+    skipped = skip_map[i]
     for c in possible_letters:
-        if c in skip_map[i]:
+        if c in skipped:
             continue
         if start_word[i] != " ":
-            backtrack(i + 1, start_word, curr_word,
-                      possible_letters, trie, must_have_letters, skip_map)
+            if start_word[i] == c:
+                backtrack(i + 1, start_word, curr_word,
+                          possible_letters, trie, must_have_letters, skip_map)
         else:
             if curr_word[i] == " ":
                 curr_word[i] = c
@@ -39,7 +41,8 @@ def backtrack(i: int, start_word: list[str], curr_word: list[str], possible_lett
 
 
 def main():
-    word = list(input("Input word so far, include spaces:\t"))
+    word = list(
+        input("Input word so far, include confirmed characters and spaces:\t"))
     possible_letters = list(
         input("Type in all possible letters, no spaces:\t"))
     must_have_letters = list(
@@ -70,9 +73,10 @@ def main():
               trie, must_have_letters, skip_map)
 
     with open("words.txt", "w", encoding="utf-8", newline="") as file:
-        for n in list(set(words)):
+        for n in sorted(list(set(words))):
             print(n)
             file.write(n + "\n")
+    print(f"{len(set(words))} word{"s" if len(set(words)) != 1 else ""} found")
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
