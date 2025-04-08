@@ -54,11 +54,12 @@ def main():
 
     start_time = time.time()
 
-    # ensure the trie pickle object has been generated, if not run word_list
+    # ensure the trie pickle object has been generated, if not run the generate_trie script
     with open("trie.pkl", "rb") as f:
         trie = pickle.load(f)
 
     # if the starter words have been used, you can eliminate more options for each index
+    # this needs to be more dynamic
     if use_starters.capitalize() == "Y":
         for starter_word in starter_words:
             for i, c in enumerate(starter_word):
@@ -72,7 +73,7 @@ def main():
     backtrack(0, word.copy(), word.copy(), possible_letters,
               trie, must_have_letters, skip_map)
 
-    with open("words.txt", "w", encoding="utf-8", newline="") as file:
+    with open("generated_words.txt", "w", encoding="utf-8", newline="") as file:
         for n in sorted(list(set(words))):
             print(n)
             file.write(n + "\n")

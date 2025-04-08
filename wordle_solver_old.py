@@ -38,7 +38,7 @@ for l in words:
         finalWords.append(l)
 
 
-with open("words.txt", "w", encoding="utf-8", newline="") as file:
+with open("generated_words.txt", "w", encoding="utf-8", newline="") as file:
     for n in list(set(finalWords)):
         print(n)
         file.write(n + "\n")
