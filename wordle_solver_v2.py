@@ -1,6 +1,6 @@
 import time
 from collections import defaultdict
-from Trie import Trie
+from generate_trie import Trie
 import pickle
 
 words = []

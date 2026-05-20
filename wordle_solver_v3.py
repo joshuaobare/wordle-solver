@@ -1,9 +1,10 @@
 import time
 import pickle
 from collections import defaultdict
+from bitmask_generate_trie import OptimizedTrie, TrieNode
 
 
-def get_mask(letters_list):
+def get_mask(letters_list: list[str]):
     mask = 0
     for char in letters_list:
         if 'a' <= char <= 'z':
@@ -29,7 +30,7 @@ def solve():
     found_words = []
     start_time = time.time()
 
-    def backtrack(node, depth, current_path_mask, current_word):
+    def backtrack(node: TrieNode, depth: int, current_path_mask: int, current_word: list[str]):
         if depth == 5:
             if node.word_end and (current_path_mask & must_have_mask) == must_have_mask:
                 found_words.append("".join(current_word))
